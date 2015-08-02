@@ -51,12 +51,10 @@ public class NameGenerator {
     }
    
     public String generateName() {
-        System.out.println(animals.size());
-        
         Set<Character> vowels = new HashSet<Character>(Arrays.asList('a','e','i','o','u'));
         boolean endsWithVowel = false;
         
-        int prefixRandom = (int) Math.random() * animals.size();
+        int prefixRandom = (int) (Math.random() * animals.size());
         String prefix = animals.get(prefixRandom).prefix;
         String prefixAnimal = animals.get(prefixRandom).animal;
         
@@ -68,8 +66,7 @@ public class NameGenerator {
         }
         
         while(true) {
-            int suffixRandom = (int) Math.random() * animals.size();
-            System.out.println(suffixRandom);
+            int suffixRandom = (int) (Math.random() * animals.size());
             suffix = animals.get(suffixRandom).suffix;            
             
             if(endsWithVowel) {
