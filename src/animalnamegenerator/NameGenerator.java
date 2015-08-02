@@ -29,12 +29,10 @@ import java.util.Set;
  * @author ankurgupta
  */
 public class NameGenerator {
-    public LinkedList<String>Prefixes;
-    public LinkedList<String>Suffixes;
+    public LinkedList<Animal>animals;
     
     public NameGenerator() {
-        Prefixes = new LinkedList<>();
-        Suffixes = new LinkedList<>();
+        animals = new LinkedList<>();
     }
     
     public void extractData() {
@@ -44,12 +42,7 @@ public class NameGenerator {
             while(line != null) {
                 line = br.readLine();
                 
-                int delimiterLocation = line.indexOf("|");
-                String prefix = line.substring(0, delimiterLocation - 1);
-                String suffix = line.substring(delimiterLocation + 2, line.length());
-                
-                Prefixes.add(prefix);
-                Suffixes.add(suffix);
+                animals.add(new Animal(line));
             }
         }
         catch(Exception e) {
@@ -58,32 +51,49 @@ public class NameGenerator {
     }
    
     public String generateName() {
+        System.out.println(animals.size());
+        
         Set<Character> vowels = new HashSet<Character>(Arrays.asList('a','e','i','o','u'));
         boolean endsWithVowel = false;
         
-        String prefix = Prefixes.get((int)(Math.random() * Prefixes.size()));
+        int prefixRandom = (int) Math.random() * animals.size();
+        String prefix = animals.get(prefixRandom).prefix;
+        String prefixAnimal = animals.get(prefixRandom).animal;
+        
         String suffix = "";
+        String suffixAnimal = "";
         
         if(vowels.contains(Character.toLowerCase(prefix.charAt(prefix.length() - 1)))) {
             endsWithVowel = true;
         }
         
         while(true) {
-            suffix = Suffixes.get((int)(Math.random() * Suffixes.size()));
+            int suffixRandom = (int) Math.random() * animals.size();
+            System.out.println(suffixRandom);
+            suffix = animals.get(suffixRandom).suffix;            
             
             if(endsWithVowel) {
                 if(!vowels.contains(Character.toLowerCase(suffix.charAt(0)))) {
+                    suffixAnimal = animals.get(suffixRandom).animal;
                     break;
                 }
             }
             else if(!endsWithVowel) {
                 if(vowels.contains(Character.toLowerCase(suffix.charAt(0)))) {
+                    suffixAnimal = animals.get(suffixRandom).animal;
                     break;
                 }
             }
         }
         
-        String finalString = prefix + suffix;
-        return finalString;
+        StringBuilder finalString = new StringBuilder();
+        finalString.append(prefixAnimal);
+        finalString.append(" + ");
+        finalString.append(suffixAnimal);
+        finalString.append(" = ");
+        finalString.append(prefix);
+        finalString.append(suffix);
+        
+        return finalString.toString();
     }
 }
