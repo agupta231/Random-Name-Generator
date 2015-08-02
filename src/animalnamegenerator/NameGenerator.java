@@ -70,10 +70,8 @@ public class NameGenerator {
         
         while(true) {
             suffix = Suffixes.get((int)(Math.random() * Suffixes.size()));
-            System.out.println(suffix);
             
             if(endsWithVowel) {
-                System.out.println("Ends with vowel");
                 if(!vowels.contains(Character.toLowerCase(suffix.charAt(0)))) {
                     break;
                 }
